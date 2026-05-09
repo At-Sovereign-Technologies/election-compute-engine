@@ -9,3 +9,4 @@
 /home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/obj/Debug/net8.0/refint/Election.Core.dll
 /home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/obj/Debug/net8.0/Election.Core.pdb
 /home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/obj/Debug/net8.0/ref/Election.Core.dll
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/obj/Debug/net8.0/Election.Core.sourcelink.json

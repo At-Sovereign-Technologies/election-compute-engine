@@ -35,3 +35,4 @@
 /home/juan-martin/SelloLegitimo/election-compute-engine/Election.Api/obj/Debug/net8.0/Election.Api.pdb
 /home/juan-martin/SelloLegitimo/election-compute-engine/Election.Api/obj/Debug/net8.0/Election.Api.genruntimeconfig.cache
 /home/juan-martin/SelloLegitimo/election-compute-engine/Election.Api/obj/Debug/net8.0/ref/Election.Api.dll
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Api/obj/Debug/net8.0/Election.Api.sourcelink.json

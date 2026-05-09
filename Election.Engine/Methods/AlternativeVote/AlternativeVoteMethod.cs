@@ -22,14 +22,14 @@ public class AlternativeVoteMethod : IMetodoElectoral
 
     public Resultado CalcularResultado()
     {
+        var resultado = new Resultado();
+
         if (!_urna.Any())
         {
-            return new Resultado
-            {
-                Ganador = "Sin votos",
-                Porcentaje = 0,
-                Totales = new Dictionary<string, decimal>()
-            };
+            resultado.Ganador = "Sin votos";
+            resultado.Porcentaje = 0;
+
+            return resultado;
         }
 
         var candidatos = _urna
@@ -39,21 +39,15 @@ public class AlternativeVoteMethod : IMetodoElectoral
 
         var eliminados = new HashSet<string>();
 
+        int ronda = 1;
+
         while (true)
         {
             var conteo = candidatos
                 .Where(c => !eliminados.Contains(c))
                 .ToDictionary(c => c, c => 0m);
 
-            if (!conteo.Any())
-            {
-                return new Resultado
-                {
-                    Ganador = "Sin ganador",
-                    Porcentaje = 0,
-                    Totales = new Dictionary<string, decimal>()
-                };
-            }
+            decimal votosAgotados = 0;
 
             foreach (var voto in _urna)
             {
@@ -66,6 +60,10 @@ public class AlternativeVoteMethod : IMetodoElectoral
                 {
                     conteo[preferenciaActiva.Key]++;
                 }
+                else
+                {
+                    votosAgotados++;
+                }
             }
 
             decimal totalActivos = conteo.Values.Sum();
@@ -76,12 +74,18 @@ public class AlternativeVoteMethod : IMetodoElectoral
 
                 if (porcentaje > 0.5m)
                 {
-                    return new Resultado
+                    resultado.Ganador = item.Key;
+                    resultado.Porcentaje = porcentaje;
+                    resultado.Totales = conteo;
+
+                    resultado.Rondas.Add(new RondaResultado
                     {
-                        Ganador = item.Key,
-                        Porcentaje = porcentaje,
-                        Totales = conteo
-                    };
+                        NumeroRonda = ronda,
+                        Conteo = new Dictionary<string, decimal>(conteo),
+                        VotosAgotados = votosAgotados
+                    });
+
+                    return resultado;
                 }
             }
 
@@ -89,7 +93,17 @@ public class AlternativeVoteMethod : IMetodoElectoral
                 .OrderBy(x => x.Value)
                 .First();
 
+            resultado.Rondas.Add(new RondaResultado
+            {
+                NumeroRonda = ronda,
+                Conteo = new Dictionary<string, decimal>(conteo),
+                CandidatoEliminado = eliminado.Key,
+                VotosAgotados = votosAgotados
+            });
+
             eliminados.Add(eliminado.Key);
+
+            ronda++;
         }
     }
 

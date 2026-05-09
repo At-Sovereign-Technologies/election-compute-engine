@@ -13,3 +13,4 @@
 /home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/obj/Debug/net8.0/refint/Election.Engine.dll
 /home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/obj/Debug/net8.0/Election.Engine.pdb
 /home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/obj/Debug/net8.0/ref/Election.Engine.dll
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/obj/Debug/net8.0/Election.Engine.sourcelink.json

@@ -7,4 +7,6 @@ public class Resultado
     public decimal Porcentaje { get; set; }
 
     public Dictionary<string, decimal> Totales { get; set; } = new();
+
+    public List<RondaResultado> Rondas { get; set; } = new();
 }
