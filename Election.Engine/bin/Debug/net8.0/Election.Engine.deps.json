@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Election.Engine/1.0.0": {
+        "dependencies": {
+          "Election.Core": "1.0.0"
+        },
+        "runtime": {
+          "Election.Engine.dll": {}
+        }
+      },
+      "Election.Core/1.0.0": {
+        "runtime": {
+          "Election.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Election.Engine/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Election.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,0 +1,15 @@
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/bin/Debug/net8.0/Election.Engine.deps.json
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/bin/Debug/net8.0/Election.Engine.dll
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/bin/Debug/net8.0/Election.Engine.pdb
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/bin/Debug/net8.0/Election.Core.dll
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/bin/Debug/net8.0/Election.Core.pdb
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/obj/Debug/net8.0/Election.Engine.csproj.AssemblyReference.cache
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/obj/Debug/net8.0/Election.Engine.GeneratedMSBuildEditorConfig.editorconfig
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/obj/Debug/net8.0/Election.Engine.AssemblyInfoInputs.cache
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/obj/Debug/net8.0/Election.Engine.AssemblyInfo.cs
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/obj/Debug/net8.0/Election.Engine.csproj.CoreCompileInputs.cache
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/obj/Debug/net8.0/Election.Engine.csproj.CopyComplete
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/obj/Debug/net8.0/Election.Engine.dll
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/obj/Debug/net8.0/refint/Election.Engine.dll
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/obj/Debug/net8.0/Election.Engine.pdb
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/obj/Debug/net8.0/ref/Election.Engine.dll

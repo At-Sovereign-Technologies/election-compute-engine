@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "5lP+b9d6I1lJYzsREWjAKPs3D3x4az5XrzOchKebVL4=",
+  "Source": "Election.Api",
+  "BasePath": "_content/Election.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
