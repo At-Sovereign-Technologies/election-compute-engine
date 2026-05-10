@@ -101,3 +101,4 @@
 /home/juan-martin/SelloLegitimo/election-compute-engine/Election.Tests/obj/Debug/net8.0/Election.Tests.pdb
 /home/juan-martin/SelloLegitimo/election-compute-engine/Election.Tests/obj/Debug/net8.0/Election.Tests.genruntimeconfig.cache
 /home/juan-martin/SelloLegitimo/election-compute-engine/Election.Tests/obj/Debug/net8.0/ref/Election.Tests.dll
+/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Tests/obj/Debug/net8.0/Election.Tests.sourcelink.json
