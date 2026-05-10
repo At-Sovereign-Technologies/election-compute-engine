@@ -175,7 +175,3 @@ GET  /api/ceremony/status
 ```
 
 ---
-
-# Autor
-
-Proyecto académico de Arquitectura de Software desarrollado en .NET 8.
