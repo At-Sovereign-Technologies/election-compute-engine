@@ -1,5 +1,6 @@
 using Election.Core.Interfaces;
 using Election.Engine.Methods.AlternativeVote;
+using Election.Engine.Methods.MayoriaSimple;
 using Election.VoteVault.Services;
 using Election.VoteVault.Workers;
 using Election.VoteVault.Ceremony.Interfaces;
@@ -21,6 +22,11 @@ builder.Services.AddSingleton<IVoteVaultService,VoteVaultService>();
 builder.Services.AddSingleton<ISealService, SealService>();
 
 builder.Services.AddHostedService<VaultHeartbeatWorker>();
+
+builder.Services.AddSingleton<IMetodoElectoral>(
+    new MayoriaSimpleMethod(new List<string> { "CandidatoA", "CandidatoB", "CandidatoC" })
+);
+
 
 builder.Services.AddSingleton<
     IOpeningCeremonyService,

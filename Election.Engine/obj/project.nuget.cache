@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "HaD0StM+c7uB/BOVUSZ8YwQfMquY2AYFvWZ36xN+zi1CgZv/rXuqBttxbXUQdW8yCzC2VenS1g7d2xgEfT/8pA==",
+  "dgSpecHash": "dd2u60OKfRM=",
   "success": true,
-  "projectFilePath": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/Election.Engine.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\felip\\sello-legitimo\\election-compute-engine\\Election.Engine\\Election.Engine.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\felip\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.26\\microsoft.netcore.app.ref.8.0.26.nupkg.sha512",
+    "C:\\Users\\felip\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.26\\microsoft.windowsdesktop.app.ref.8.0.26.nupkg.sha512",
+    "C:\\Users\\felip\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.26\\microsoft.aspnetcore.app.ref.8.0.26.nupkg.sha512"
+  ],
   "logs": []
 }
