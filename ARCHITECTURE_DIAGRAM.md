@@ -313,9 +313,9 @@ appsettings.json (Base)
     │
     └─ Logging:LogLevel
        └─ Election.*: Information
-       
+
             ↓
-            
+
 appsettings.Development.json (Override)
     │
     ├─ Inherits from base

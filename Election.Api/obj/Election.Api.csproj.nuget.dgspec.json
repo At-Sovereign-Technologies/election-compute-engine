@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Api/Election.Api.csproj": {}
+    "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Api\\Election.Api.csproj": {}
   },
   "projects": {
-    "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Api/Election.Api.csproj": {
+    "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Api\\Election.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Api/Election.Api.csproj",
+        "projectUniqueName": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Api\\Election.Api.csproj",
         "projectName": "Election.Api",
-        "projectPath": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Api/Election.Api.csproj",
-        "packagesPath": "/home/juan-martin/.nuget/packages/",
-        "outputPath": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Api/obj/",
+        "projectPath": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Api\\Election.Api.csproj",
+        "packagesPath": "C:\\Users\\tomas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/juan-martin/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\tomas\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -26,14 +26,14 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/Election.Core.csproj": {
-                "projectPath": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/Election.Core.csproj"
+              "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Core\\Election.Core.csproj": {
+                "projectPath": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Core\\Election.Core.csproj"
               },
-              "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/Election.Engine.csproj": {
-                "projectPath": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/Election.Engine.csproj"
+              "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Engine\\Election.Engine.csproj": {
+                "projectPath": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Engine\\Election.Engine.csproj"
               },
-              "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.VoteVault/Election.VoteVault.csproj": {
-                "projectPath": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.VoteVault/Election.VoteVault.csproj"
+              "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.VoteVault\\Election.VoteVault.csproj": {
+                "projectPath": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.VoteVault\\Election.VoteVault.csproj"
               }
             }
           }
@@ -42,6 +42,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -76,21 +81,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.126/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.420/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/Election.Core.csproj": {
+    "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Core\\Election.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/Election.Core.csproj",
+        "projectUniqueName": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Core\\Election.Core.csproj",
         "projectName": "Election.Core",
-        "projectPath": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/Election.Core.csproj",
-        "packagesPath": "/home/juan-martin/.nuget/packages/",
-        "outputPath": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/obj/",
+        "projectPath": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Core\\Election.Core.csproj",
+        "packagesPath": "C:\\Users\\tomas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/juan-martin/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\tomas\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -108,6 +113,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -129,21 +139,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.126/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.420/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/Election.Engine.csproj": {
+    "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Engine\\Election.Engine.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/Election.Engine.csproj",
+        "projectUniqueName": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Engine\\Election.Engine.csproj",
         "projectName": "Election.Engine",
-        "projectPath": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/Election.Engine.csproj",
-        "packagesPath": "/home/juan-martin/.nuget/packages/",
-        "outputPath": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Engine/obj/",
+        "projectPath": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Engine\\Election.Engine.csproj",
+        "packagesPath": "C:\\Users\\tomas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Engine\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/juan-martin/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\tomas\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -155,8 +165,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/Election.Core.csproj": {
-                "projectPath": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/Election.Core.csproj"
+              "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Core\\Election.Core.csproj": {
+                "projectPath": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Core\\Election.Core.csproj"
               }
             }
           }
@@ -165,11 +175,22 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[10.0.7, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -186,21 +207,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.126/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.420/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.VoteVault/Election.VoteVault.csproj": {
+    "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.VoteVault\\Election.VoteVault.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.VoteVault/Election.VoteVault.csproj",
+        "projectUniqueName": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.VoteVault\\Election.VoteVault.csproj",
         "projectName": "Election.VoteVault",
-        "projectPath": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.VoteVault/Election.VoteVault.csproj",
-        "packagesPath": "/home/juan-martin/.nuget/packages/",
-        "outputPath": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.VoteVault/obj/",
+        "projectPath": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.VoteVault\\Election.VoteVault.csproj",
+        "packagesPath": "C:\\Users\\tomas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.VoteVault\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/juan-martin/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\tomas\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -211,13 +232,22 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Core\\Election.Core.csproj": {
+                "projectPath": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Core\\Election.Core.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -245,7 +275,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.126/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.420/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -16,6 +16,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Allow cross-origin requests from any origin (permissive for local testing)
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 // Configure HttpClient for Transparency Service
 var transparencyServiceUrl = builder.Configuration["TransparencyService:BaseUrl"] 
     ?? "http://localhost:8080";
@@ -32,7 +43,6 @@ builder.Services
     .ConfigureHttpClient(client =>
     {
         client.DefaultRequestHeaders.Add("Accept", "application/json");
-        client.DefaultRequestHeaders.Add("Content-Type", "application/json");
     });
 
 // Register audit and scrutiny services
@@ -41,9 +51,11 @@ builder.Services.AddSingleton<IScrutinyAuditor, ScrutinyAuditor>();
 
 builder.Services.AddSingleton<IMetodoElectoral, AlternativeVoteMethod>();
 
-builder.Services.AddSingleton<IVoteVaultService,VoteVaultService>();
+builder.Services.AddSingleton<VoteVaultService>();
+builder.Services.AddSingleton<IVoteVaultService>(sp => sp.GetRequiredService<VoteVaultService>());
 
-builder.Services.AddSingleton<ISealService, SealService>();
+builder.Services.AddSingleton<SealService>();
+builder.Services.AddSingleton<ISealService>(sp => sp.GetRequiredService<SealService>());
 
 builder.Services.AddHostedService<VaultHeartbeatWorker>();
 
@@ -60,6 +72,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Enable CORS
+app.UseCors();
 
 app.UseHttpsRedirection();
 

@@ -7,33 +7,38 @@ This document provides comprehensive examples of how to use the audit infrastruc
 The audit infrastructure consists of:
 
 1. **Transparency Service Integration** (`ITransparencyAuditService`)
-   - Non-blocking async event emission
-   - Fail-safe execution with local fallback logging
-   - Automatic retry handling
+    - Non-blocking async event emission
+    - Fail-safe execution with local fallback logging
+    - Automatic retry handling
 
 2. **Handshake Protocol** (`IHandshakeService`)
-   - Terminal pairing and session management
-   - Automatic audit event emission (US-SR-M6-03)
+    - Terminal pairing and session management
+    - Automatic audit event emission (US-SR-M6-03)
 
 3. **Double Truth Scrutiny** (`IScrutinyAuditor`)
-   - QR scan verification tracking
-   - Digital vs. physical vote conciliation
-   - Automatic audit event emission (US-SR-M6-04)
+    - QR scan verification tracking
+    - Digital vs. physical vote conciliation
+    - Automatic audit event emission (US-SR-M6-04)
 
 ## Key Principles
 
 ### Zero-Identity (Critical)
+
 All audit events MUST NOT contain voter PII:
+
 - ❌ NO: `voter_id`, `cedula`, `name`, `email`, `phone`
 - ✅ YES: `terminal_id`, `session_id`, `jury_id`, `timestamp`
 
 ### Fail-Safe Execution
+
 Operations are non-blocking and won't disrupt voting:
+
 - If Transparency Service is down, events are logged locally
 - Main application continues functioning
 - Events can be synchronized later
 
 ### Event Severity Levels
+
 - `INFO`: Normal operations
 - `LOW`: Minor anomalies
 - `MEDIUM`: Significant discrepancies
@@ -421,16 +426,16 @@ public class VoteProcessingService
 
 ```json
 {
-  "TransparencyService": {
-    "BaseUrl": "http://localhost:8080",
-    "Timeout": 5000
-  },
-  "Logging": {
-    "LogLevel": {
-      "Election.Api.Services.TransparencyAuditService": "Information",
-      "Election.Engine.Scrutiny.ScrutinyAuditor": "Information"
+    "TransparencyService": {
+        "BaseUrl": "http://localhost:8080",
+        "Timeout": 5000
+    },
+    "Logging": {
+        "LogLevel": {
+            "Election.Api.Services.TransparencyAuditService": "Information",
+            "Election.Engine.Scrutiny.ScrutinyAuditor": "Information"
+        }
     }
-  }
 }
 ```
 
@@ -485,29 +490,32 @@ public class HandshakeServiceTests
 
 ## API Endpoints Summary
 
-| Endpoint | Method | Use Case |
-|----------|--------|----------|
-| `/api/handshake/emit` | POST | Start terminal pairing (HANDSHAKE_EMITTED) |
-| `/api/handshake/activate` | POST | Confirm pairing code (SESSION_ACTIVATED) |
-| `/api/handshake/close` | POST | Close session (SESSION_CLOSED_VOTE or SESSION_CLOSED_TIMEOUT) |
-| `/api/scrutiny/qr-scan` | POST | Record QR scan result (QR_SCANNED) |
-| `/api/scrutiny/conciliation` | POST | Record vote conciliation (CONCILIATION_ATTEMPT) |
+| Endpoint                     | Method | Use Case                                                      |
+| ---------------------------- | ------ | ------------------------------------------------------------- |
+| `/api/handshake/emit`        | POST   | Start terminal pairing (HANDSHAKE_EMITTED)                    |
+| `/api/handshake/activate`    | POST   | Confirm pairing code (SESSION_ACTIVATED)                      |
+| `/api/handshake/close`       | POST   | Close session (SESSION_CLOSED_VOTE or SESSION_CLOSED_TIMEOUT) |
+| `/api/scrutiny/qr-scan`      | POST   | Record QR scan result (QR_SCANNED)                            |
+| `/api/scrutiny/conciliation` | POST   | Record vote conciliation (CONCILIATION_ATTEMPT)               |
 
 ---
 
 ## Troubleshooting
 
 ### Transparency Service Unavailable
+
 - Events are logged locally as fallback
 - Check logs: `LocalFallback: Audit event ...`
 - Implement retry synchronization
 
 ### Missing Audit Events
+
 - Verify `ITransparencyAuditService` is registered in DI
 - Check HttpClient configuration
 - Review application logs for errors
 
 ### PII Detected in Events
+
 - Verify all `details` dictionaries
 - Use helper methods to sanitize input
 - Review the ScrutinyController `IsVoterPII()` implementation

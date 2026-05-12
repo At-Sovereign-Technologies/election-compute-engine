@@ -3,7 +3,9 @@
 ## Key Components
 
 ### 1. Core DTO
+
 **File:** `Election.Core/Models/TransparencyEventRequest.cs`
+
 ```csharp
 public class TransparencyEventRequest
 {
@@ -16,7 +18,9 @@ public class TransparencyEventRequest
 ```
 
 ### 2. Core Service Interface
+
 **File:** `Election.Core/Interfaces/ITransparencyAuditService.cs`
+
 ```csharp
 public interface ITransparencyAuditService
 {
@@ -28,7 +32,9 @@ public interface ITransparencyAuditService
 ```
 
 ### 3. Handshake Service (US-SR-M6-03)
+
 **File:** `Election.VoteVault/Ceremony/Services/HandshakeService.cs`
+
 ```csharp
 public interface IHandshakeService
 {
@@ -39,13 +45,16 @@ public interface IHandshakeService
 ```
 
 **Audit Events Emitted:**
+
 - `HANDSHAKE_EMITTED` (INFO) - when pairing code is generated
 - `SESSION_ACTIVATED` (INFO) - when pairing is confirmed
 - `SESSION_CLOSED_VOTE` (INFO) - when vote is cast
 - `SESSION_CLOSED_TIMEOUT` (INFO) - when session expires
 
 ### 4. Scrutiny Auditor (US-SR-M6-04)
+
 **File:** `Election.Engine/Scrutiny/ScrutinyAuditor.cs`
+
 ```csharp
 public interface IScrutinyAuditor
 {
@@ -55,11 +64,14 @@ public interface IScrutinyAuditor
 ```
 
 **Audit Events Emitted:**
+
 - `QR_SCANNED` (INFO/CRITICAL) - when QR code is scanned (CRITICAL for duplicates)
 - `CONCILIATION_ATTEMPT` (INFO/MEDIUM) - when vote counts are reconciled
 
 ### 5. Implementation Service
+
 **File:** `Election.Api/Services/TransparencyAuditService.cs`
+
 - Implements `ITransparencyAuditService`
 - Uses `HttpClient` to POST to Transparency Service
 - Handles failures with local fallback logging
@@ -70,6 +82,7 @@ public interface IScrutinyAuditor
 ## Event Emission Examples
 
 ### Handshake Workflow
+
 ```
 Terminal → /api/handshake/emit
            ↓
@@ -91,6 +104,7 @@ Terminal → /api/handshake/close (with vote_payload)
 ```
 
 ### Scrutiny Workflow
+
 ```
 Admin → /api/scrutiny/qr-scan (jury_id, status="legitimate")
         ↓
@@ -132,9 +146,11 @@ builder.Services.AddSingleton<IScrutinyAuditor, ScrutinyAuditor>();
 ## Updated Services
 
 ### VoteVaultService
+
 **File:** `Election.VoteVault/Services/VoteVaultService.cs`
 
 NEW: Async method for custody with audit event emission
+
 ```csharp
 public async Task<CustodiedVote> CustodyVoteAsync(
     string payload,
@@ -150,9 +166,11 @@ public async Task<CustodiedVote> CustodyVoteAsync(
 ```
 
 ### AlternativeVoteMethod
+
 **File:** `Election.Engine/Methods/AlternativeVote/AlternativeVoteMethod.cs`
 
 NEW: Async method for calculation with audit event emission
+
 ```csharp
 public async Task<Resultado> CalcularResultadoAsync(
     CancellationToken cancellationToken = default
@@ -169,29 +187,32 @@ public async Task<Resultado> CalcularResultadoAsync(
 ## API Endpoints
 
 ### Handshake Endpoints
-| Method | Path | Emits | Returns |
-|--------|------|-------|---------|
-| POST | `/api/handshake/emit` | HANDSHAKE_EMITTED | pairing_code |
-| POST | `/api/handshake/activate` | SESSION_ACTIVATED | success, session_id |
-| POST | `/api/handshake/close` | SESSION_CLOSED_* | success, vote_id? |
+
+| Method | Path                      | Emits             | Returns             |
+| ------ | ------------------------- | ----------------- | ------------------- |
+| POST   | `/api/handshake/emit`     | HANDSHAKE_EMITTED | pairing_code        |
+| POST   | `/api/handshake/activate` | SESSION_ACTIVATED | success, session_id |
+| POST   | `/api/handshake/close`    | SESSION*CLOSED*\* | success, vote_id?   |
 
 ### Scrutiny Endpoints
-| Method | Path | Emits | Returns |
-|--------|------|-------|---------|
-| POST | `/api/scrutiny/qr-scan` | QR_SCANNED | success, status, severity |
-| POST | `/api/scrutiny/conciliation` | CONCILIATION_ATTEMPT | success, variance, variance_percentage |
+
+| Method | Path                         | Emits                | Returns                                |
+| ------ | ---------------------------- | -------------------- | -------------------------------------- |
+| POST   | `/api/scrutiny/qr-scan`      | QR_SCANNED           | success, status, severity              |
+| POST   | `/api/scrutiny/conciliation` | CONCILIATION_ATTEMPT | success, variance, variance_percentage |
 
 ---
 
 ## Configuration
 
 **File:** `Election.Api/appsettings.json`
+
 ```json
 {
-  "TransparencyService": {
-    "BaseUrl": "http://localhost:8080",        // Transparency Service URL
-    "Timeout": 5000                            // Request timeout in milliseconds
-  }
+    "TransparencyService": {
+        "BaseUrl": "http://localhost:8080", // Transparency Service URL
+        "Timeout": 5000 // Request timeout in milliseconds
+    }
 }
 ```
 
@@ -211,6 +232,7 @@ public async Task<Resultado> CalcularResultadoAsync(
 ## Error Handling & Fallback
 
 If Transparency Service is unavailable:
+
 1. Request fails with HttpRequestException or TaskCanceledException
 2. Event is logged locally with `_logger.LogWarning("LOCAL FALLBACK: ...")`
 3. Main application continues unaffected
@@ -226,6 +248,7 @@ If Transparency Service is unavailable:
 ## Testing Quick Start
 
 Mock the audit service in tests:
+
 ```csharp
 var mockAuditService = new Mock<ITransparencyAuditService>();
 mockAuditService
@@ -239,23 +262,23 @@ var service = new HandshakeService(mockAuditService.Object, logger);
 
 ## Documentation Files
 
-| File | Purpose |
-|------|---------|
+| File                            | Purpose                                          |
+| ------------------------------- | ------------------------------------------------ |
 | `AUDIT_INFRASTRUCTURE_GUIDE.md` | Comprehensive implementation guide with examples |
-| `IMPLEMENTATION_COMPLETE.md` | Full project summary and checklist |
-| `QUICK_REFERENCE.md` | This file - quick lookup |
+| `IMPLEMENTATION_COMPLETE.md`    | Full project summary and checklist               |
+| `QUICK_REFERENCE.md`            | This file - quick lookup                         |
 
 ---
 
 ## Troubleshooting
 
-| Issue | Solution |
-|-------|----------|
-| Audit events not sent | Check Transparency Service URL and port in appsettings.json |
-| HttpRequestException | Verify Transparency Service is running and accessible |
-| TaskCanceledException | Increase timeout in appsettings.json |
-| PII in audit events | Verify details dictionary doesn't contain voter_id, name, etc. |
-| Missing audit events | Verify ITransparencyAuditService is registered in DI |
+| Issue                 | Solution                                                       |
+| --------------------- | -------------------------------------------------------------- |
+| Audit events not sent | Check Transparency Service URL and port in appsettings.json    |
+| HttpRequestException  | Verify Transparency Service is running and accessible          |
+| TaskCanceledException | Increase timeout in appsettings.json                           |
+| PII in audit events   | Verify details dictionary doesn't contain voter_id, name, etc. |
+| Missing audit events  | Verify ITransparencyAuditService is registered in DI           |
 
 ---
 
