@@ -10,3 +10,15 @@
 /home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/obj/Debug/net8.0/Election.Core.pdb
 /home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/obj/Debug/net8.0/ref/Election.Core.dll
 /home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/obj/Debug/net8.0/Election.Core.sourcelink.json
+C:\Users\tomas\Downloads\7mo_Semestre\Arquitectura\desarrollo_sello_legitimo\election-compute-engine\Election.Core\bin\Debug\net8.0\Election.Core.deps.json
+C:\Users\tomas\Downloads\7mo_Semestre\Arquitectura\desarrollo_sello_legitimo\election-compute-engine\Election.Core\bin\Debug\net8.0\Election.Core.dll
+C:\Users\tomas\Downloads\7mo_Semestre\Arquitectura\desarrollo_sello_legitimo\election-compute-engine\Election.Core\bin\Debug\net8.0\Election.Core.pdb
+C:\Users\tomas\Downloads\7mo_Semestre\Arquitectura\desarrollo_sello_legitimo\election-compute-engine\Election.Core\obj\Debug\net8.0\Election.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tomas\Downloads\7mo_Semestre\Arquitectura\desarrollo_sello_legitimo\election-compute-engine\Election.Core\obj\Debug\net8.0\Election.Core.AssemblyInfoInputs.cache
+C:\Users\tomas\Downloads\7mo_Semestre\Arquitectura\desarrollo_sello_legitimo\election-compute-engine\Election.Core\obj\Debug\net8.0\Election.Core.AssemblyInfo.cs
+C:\Users\tomas\Downloads\7mo_Semestre\Arquitectura\desarrollo_sello_legitimo\election-compute-engine\Election.Core\obj\Debug\net8.0\Election.Core.csproj.CoreCompileInputs.cache
+C:\Users\tomas\Downloads\7mo_Semestre\Arquitectura\desarrollo_sello_legitimo\election-compute-engine\Election.Core\obj\Debug\net8.0\Election.Core.sourcelink.json
+C:\Users\tomas\Downloads\7mo_Semestre\Arquitectura\desarrollo_sello_legitimo\election-compute-engine\Election.Core\obj\Debug\net8.0\Election.Core.dll
+C:\Users\tomas\Downloads\7mo_Semestre\Arquitectura\desarrollo_sello_legitimo\election-compute-engine\Election.Core\obj\Debug\net8.0\refint\Election.Core.dll
+C:\Users\tomas\Downloads\7mo_Semestre\Arquitectura\desarrollo_sello_legitimo\election-compute-engine\Election.Core\obj\Debug\net8.0\Election.Core.pdb
+C:\Users\tomas\Downloads\7mo_Semestre\Arquitectura\desarrollo_sello_legitimo\election-compute-engine\Election.Core\obj\Debug\net8.0\ref\Election.Core.dll

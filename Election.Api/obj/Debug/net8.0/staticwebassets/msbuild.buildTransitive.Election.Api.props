@@ -1,3 +1,3 @@
 ﻿<Project>
-  <Import Project="../buildMultiTargeting/Election.Api.props" />
+  <Import Project="..\buildMultiTargeting\Election.Api.props" />
 </Project>

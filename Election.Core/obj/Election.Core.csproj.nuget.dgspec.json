@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/Election.Core.csproj": {}
+    "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Core\\Election.Core.csproj": {}
   },
   "projects": {
-    "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/Election.Core.csproj": {
+    "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Core\\Election.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/Election.Core.csproj",
+        "projectUniqueName": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Core\\Election.Core.csproj",
         "projectName": "Election.Core",
-        "projectPath": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/Election.Core.csproj",
-        "packagesPath": "/home/juan-martin/.nuget/packages/",
-        "outputPath": "/home/juan-martin/SelloLegitimo/election-compute-engine/Election.Core/obj/",
+        "projectPath": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Core\\Election.Core.csproj",
+        "packagesPath": "C:\\Users\\tomas\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\tomas\\Downloads\\7mo_Semestre\\Arquitectura\\desarrollo_sello_legitimo\\election-compute-engine\\Election.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/juan-martin/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\tomas\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -32,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -53,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.126/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.420/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
