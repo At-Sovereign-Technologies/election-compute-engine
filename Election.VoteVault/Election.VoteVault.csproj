@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Election.Core\Election.Core.csproj" />
+  </ItemGroup>
+
 </Project>

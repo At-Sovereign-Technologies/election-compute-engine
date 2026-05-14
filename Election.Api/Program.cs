@@ -1,3 +1,4 @@
+using Election.Api.Adapters;
 using Election.Core.Interfaces;
 using Election.Engine.Methods.AlternativeVote;
 using Election.Engine.Methods.MayoriaSimple;
@@ -24,7 +25,7 @@ builder.Services.AddSingleton<ISealService, SealService>();
 builder.Services.AddHostedService<VaultHeartbeatWorker>();
 
 builder.Services.AddSingleton<IMetodoElectoral>(
-    new MayoriaSimpleMethod(new List<string> { "CandidatoA", "CandidatoB", "CandidatoC" })
+    new MayoriaSimpleMethod(new List<string> { "juan_pablo", "elena", "ricardo" })
 );
 
 
@@ -32,6 +33,13 @@ builder.Services.AddSingleton<
     IOpeningCeremonyService,
     OpeningCeremonyService
 >();
+
+// SE-M3-01 / SE-M3-02: emisión de voto (presencial y remoto).
+builder.Services.AddSingleton<IServicioFirmaDigital, ServicioFirmaDigital>();
+builder.Services.AddSingleton<IGeneradorVvpat, GeneradorVvpatTexto>();
+builder.Services.AddSingleton<IPuertoAuditoriaSrM6, AdaptadorAuditoriaLog>();
+builder.Services.AddSingleton<IPuertoEmailCertificado, AdaptadorEmailLog>();
+builder.Services.AddSingleton<IServicioEmisionVoto, ServicioEmisionVoto>();
 
 var app = builder.Build();
 
