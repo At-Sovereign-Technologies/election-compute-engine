@@ -31,7 +31,7 @@ public class EmisionVotoController : ControllerBase
         try
         {
             emision.Canal = CanalVoto.Presencial;
-            var comprobante = _servicio.EmitirPresencial(emision, IpRemoto(), UserAgent());
+            var comprobante = _servicio.EmitirPresencial(emision);
             return Ok(comprobante);
         }
         catch (ArgumentException ex)
@@ -41,7 +41,7 @@ public class EmisionVotoController : ControllerBase
         }
         catch (InvalidOperationException ex)
         {
-            _logger.LogWarning(ex, "EmisionPresencial: voto rechazado por el método electoral.");
+            _logger.LogWarning(ex, "EmisionPresencial: voto rechazado.");
             return BadRequest(new { mensaje = ex.Message });
         }
     }
@@ -57,7 +57,7 @@ public class EmisionVotoController : ControllerBase
         try
         {
             req.Emision.Canal = CanalVoto.Remoto;
-            var comprobante = _servicio.EmitirRemoto(req.Emision, req.EmailDestino, IpRemoto(), UserAgent());
+            var comprobante = _servicio.EmitirRemoto(req.Emision, req.EmailDestino);
             return Ok(comprobante);
         }
         catch (ArgumentException ex)
@@ -67,17 +67,10 @@ public class EmisionVotoController : ControllerBase
         }
         catch (InvalidOperationException ex)
         {
-            _logger.LogWarning(ex, "EmisionRemoto: voto rechazado por el método electoral.");
+            _logger.LogWarning(ex, "EmisionRemoto: voto rechazado.");
             return BadRequest(new { mensaje = ex.Message });
         }
     }
-
-    private string? IpRemoto() => HttpContext.Connection.RemoteIpAddress?.ToString();
-
-    private string? UserAgent() =>
-        HttpContext.Request.Headers.TryGetValue("User-Agent", out var ua)
-            ? ua.ToString()
-            : null;
 }
 
 public class EmisionVotoRemotoRequest

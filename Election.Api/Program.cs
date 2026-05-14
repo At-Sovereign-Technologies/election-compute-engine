@@ -37,9 +37,24 @@ builder.Services.AddSingleton<
 // SE-M3-01 / SE-M3-02: emisión de voto (presencial y remoto).
 builder.Services.AddSingleton<IServicioFirmaDigital, ServicioFirmaDigital>();
 builder.Services.AddSingleton<IGeneradorVvpat, GeneradorVvpatTexto>();
-builder.Services.AddSingleton<IPuertoAuditoriaSrM6, AdaptadorAuditoriaLog>();
 builder.Services.AddSingleton<IPuertoEmailCertificado, AdaptadorEmailLog>();
 builder.Services.AddSingleton<IServicioEmisionVoto, ServicioEmisionVoto>();
+
+// SR-M6 (transparency-service): bus HTTP centralizado para auditoría.
+// URL configurable en appsettings (TransparencyService:Url).
+string transparencyUrl =
+    builder.Configuration["TransparencyService:Url"]
+    ?? throw new InvalidOperationException(
+        "Falta TransparencyService:Url en la configuración.");
+
+builder.Services
+    .AddHttpClient(AdaptadorAuditoriaHttp.HTTP_CLIENT_NAME, client =>
+    {
+        client.BaseAddress = new Uri(transparencyUrl);
+        client.Timeout = TimeSpan.FromSeconds(5);
+    });
+
+builder.Services.AddSingleton<IPuertoAuditoriaSrM6, AdaptadorAuditoriaHttp>();
 
 var app = builder.Build();
 

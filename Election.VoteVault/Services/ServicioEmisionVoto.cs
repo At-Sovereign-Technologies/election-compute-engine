@@ -35,36 +35,32 @@ public class ServicioEmisionVoto : IServicioEmisionVoto
         _email = email;
     }
 
-    public ComprobanteVoto EmitirPresencial(EmisionVoto emision, string? ipOrigen, string? userAgent)
+    public ComprobanteVoto EmitirPresencial(EmisionVoto emision)
     {
         if (string.IsNullOrWhiteSpace(emision.HandshakeId))
         {
             throw new ArgumentException("HandshakeId es obligatorio para emisión presencial.");
         }
 
-        var comprobante = EmitirComun(emision, CanalVoto.Presencial, ipOrigen, userAgent);
+        var comprobante = EmitirComun(emision, CanalVoto.Presencial);
         comprobante.VvpatBase64 = _vvpat.GenerarVvpatBase64(comprobante, emision);
         return comprobante;
     }
 
-    public ComprobanteVoto EmitirRemoto(EmisionVoto emision, string emailDestino, string? ipOrigen, string? userAgent)
+    public ComprobanteVoto EmitirRemoto(EmisionVoto emision, string emailDestino)
     {
         if (string.IsNullOrWhiteSpace(emailDestino))
         {
             throw new ArgumentException("emailDestino es obligatorio para emisión remota.");
         }
 
-        var comprobante = EmitirComun(emision, CanalVoto.Remoto, ipOrigen, userAgent);
+        var comprobante = EmitirComun(emision, CanalVoto.Remoto);
         comprobante.EmailDestino = emailDestino;
         _email.EnviarComprobante(emailDestino, comprobante);
         return comprobante;
     }
 
-    private ComprobanteVoto EmitirComun(
-        EmisionVoto emision,
-        CanalVoto canal,
-        string? ipOrigen,
-        string? userAgent)
+    private ComprobanteVoto EmitirComun(EmisionVoto emision, CanalVoto canal)
     {
         var voto = MapearAVoto(emision);
 
@@ -94,29 +90,27 @@ public class ServicioEmisionVoto : IServicioEmisionVoto
             Canal = canal
         };
 
-        // Firma sobre los campos no mutables (excluye VvpatBase64 y EmailDestino,
-        // que son derivados/destino de entrega).
+        // Firma sobre los campos no mutables.
         comprobante.FirmaDigital = FirmarComprobante(comprobante);
 
-        // Registro en SR-M6: solo el hash, nunca el contenido.
+        // Registro en SR-M6 (transparency-service). Política Zero-Identity:
+        // solo hashes, IDs criptográficos y metadatos de mesa/elección.
+        // Nunca VotanteId, HandshakeId, IP, user-agent ni preferencias.
         _auditoria.RegistrarEvento(new EventoAuditoriaSrM6
         {
-            Actor = $"votante:{emision.VotanteId}",
-            Accion = canal == CanalVoto.Presencial
-                ? "VOTO_EMITIDO_PRESENCIAL"
-                : "VOTO_EMITIDO_REMOTO",
-            ObjetoTipo = "VOTO",
-            ObjetoId = custodiado.Id.ToString(),
             Timestamp = timestamp,
-            IpOrigen = ipOrigen,
-            UserAgent = userAgent,
-            PayloadJson = JsonSerializer.Serialize(new
+            OriginComponent = "COMPUTE_ENGINE",
+            EventType = canal == CanalVoto.Presencial
+                ? "VOTE_HASH_REGISTERED_PRESENCIAL"
+                : "VOTE_HASH_REGISTERED_REMOTO",
+            Severity = "INFO",
+            Details = new Dictionary<string, object>
             {
-                hashVoto,
-                numeroConfirmacion,
-                circunscripcionId = emision.CircunscripcionId,
-                handshakeId = emision.HandshakeId
-            })
+                ["custodyId"] = custodiado.Id.ToString(),
+                ["voteHash"] = hashVoto,
+                ["pollingStationId"] = emision.CircunscripcionId,
+                ["cryptographic_protocol"] = "SHA-256"
+            }
         });
 
         return comprobante;

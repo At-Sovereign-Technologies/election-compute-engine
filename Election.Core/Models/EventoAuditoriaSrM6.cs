@@ -1,13 +1,21 @@
 namespace Election.Core.Models;
 
+// Espejo del contrato HTTP del transparency-service.
+// POST http://<transparency-service>/api/v1/transparency/events
+//
+// IMPORTANTE — política Zero-Identity:
+// `Details` debe contener exclusivamente metadatos criptográficos, hashes
+// o identificadores de mesa/elección. Cualquier campo con PII en texto
+// plano causa rechazo HTTP 400 por el gateway de transparencia.
 public class EventoAuditoriaSrM6
 {
-    public string Actor { get; set; } = string.Empty;
-    public string Accion { get; set; } = string.Empty;
-    public string ObjetoTipo { get; set; } = string.Empty;
-    public string ObjetoId { get; set; } = string.Empty;
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;
-    public string? IpOrigen { get; set; }
-    public string? UserAgent { get; set; }
-    public string PayloadJson { get; set; } = "{}";
+
+    public string OriginComponent { get; set; } = "COMPUTE_ENGINE";
+
+    public string EventType { get; set; } = string.Empty;
+
+    public string Severity { get; set; } = "INFO";
+
+    public Dictionary<string, object> Details { get; set; } = new();
 }
