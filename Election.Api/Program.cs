@@ -1,4 +1,6 @@
 using Election.Api.Adapters;
+using Election.Api.Data;
+using Election.Api.Services;
 using Election.Core.Interfaces;
 using Election.Engine.Methods.AlternativeVote;
 using Election.Engine.Methods.MayoriaSimple;
@@ -7,6 +9,7 @@ using Election.VoteVault.Workers;
 using Election.VoteVault.Ceremony.Interfaces;
 using Election.VoteVault.Ceremony.Services;
 using Election.VoteVault.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using SendGrid;
 using SendGrid.Extensions.DependencyInjection;
 
@@ -84,7 +87,29 @@ builder.Services
 
 builder.Services.AddSingleton<IPuertoAuditoriaSrM6, AdaptadorAuditoriaHttp>();
 
+// SE-M3-05: persistencia local de registros de asistencia (SQLite).
+// Provider intercambiable a Postgres con un solo cambio aquí.
+string asistenciaConn =
+    builder.Configuration.GetConnectionString("Asistencia")
+    ?? "Data Source=sello_jornada.db";
+
+builder.Services.AddDbContextFactory<AsistenciaDbContext>(opts =>
+    opts.UseSqlite(asistenciaConn));
+
+builder.Services.AddSingleton<IServicioAsistencia, ServicioAsistencia>();
+
 var app = builder.Build();
+
+// SE-M3-05: crear la BD en el arranque si no existe. EnsureCreated es suficiente
+// para SQLite en entorno academico. Si se cambia a Postgres en produccion, aqui
+// se reemplaza por db.Database.MigrateAsync() con migraciones EF formales.
+using (var scope = app.Services.CreateScope())
+{
+    var factory = scope.ServiceProvider
+        .GetRequiredService<IDbContextFactory<AsistenciaDbContext>>();
+    using var db = factory.CreateDbContext();
+    db.Database.EnsureCreated();
+}
 
 // Swagger
 if (app.Environment.IsDevelopment())

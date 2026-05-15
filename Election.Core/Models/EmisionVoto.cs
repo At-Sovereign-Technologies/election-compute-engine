@@ -23,4 +23,10 @@ public class EmisionVoto
     public Dictionary<string, int> Preferencias { get; set; } = new();
 
     public bool EnBlanco { get; set; }
+
+    // SE-M3-05: presente solo cuando es voto asistido. El backend valida la firma
+    // del token (RSA-PSS), su vigencia, y que no haya sido consumido previamente.
+    // El registro de asistencia queda vinculado al voto por referencia (registroId),
+    // nunca por documento.
+    public string? TokenAsistencia { get; set; }
 }

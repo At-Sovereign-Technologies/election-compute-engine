@@ -22,4 +22,9 @@ public class ComprobanteVoto
 
     // Remoto: correo certificado destino. Presencial: null.
     public string? EmailDestino { get; set; }
+
+    // SE-M3-05: marca si el voto fue asistido. Referencia anónima al registro
+    // de asistencia (no expone documento del votante ni del acompañante).
+    public bool VotoAsistido { get; set; }
+    public Guid? RegistroAsistenciaId { get; set; }
 }

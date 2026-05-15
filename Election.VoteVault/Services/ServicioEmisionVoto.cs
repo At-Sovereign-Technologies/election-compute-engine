@@ -17,6 +17,7 @@ public class ServicioEmisionVoto : IServicioEmisionVoto
     private readonly IPuertoAuditoriaSrM6 _auditoria;
     private readonly IPuertoEmailCertificado _email;
     private readonly IValidadorHandshake _handshake;
+    private readonly IServicioAsistencia _asistencia;
     private static readonly char[] AlfabetoConfirmacion =
         "ABCDEFGHJKLMNPQRSTUVWXYZ23456789".ToCharArray();
 
@@ -27,7 +28,8 @@ public class ServicioEmisionVoto : IServicioEmisionVoto
         IGeneradorVvpat vvpat,
         IPuertoAuditoriaSrM6 auditoria,
         IPuertoEmailCertificado email,
-        IValidadorHandshake handshake)
+        IValidadorHandshake handshake,
+        IServicioAsistencia asistencia)
     {
         _metodo = metodo;
         _vault = vault;
@@ -36,6 +38,7 @@ public class ServicioEmisionVoto : IServicioEmisionVoto
         _auditoria = auditoria;
         _email = email;
         _handshake = handshake;
+        _asistencia = asistencia;
     }
 
     public ComprobanteVoto EmitirPresencial(EmisionVoto emision)
@@ -77,6 +80,20 @@ public class ServicioEmisionVoto : IServicioEmisionVoto
             throw new InvalidOperationException("Voto inválido para el método electoral configurado.");
         }
 
+        // SE-M3-05: si el voto viene con token de asistencia, lo consumo antes
+        // de aceptar el voto. Si el token es inválido / expirado / ya consumido,
+        // rechazo el voto.
+        RegistroAsistencia? asistencia = null;
+        if (!string.IsNullOrWhiteSpace(emision.TokenAsistencia))
+        {
+            asistencia = _asistencia.ConsumirToken(emision.TokenAsistencia);
+            if (asistencia is null)
+            {
+                throw new InvalidOperationException(
+                    "Token de asistencia inválido, expirado o ya consumido.");
+            }
+        }
+
         string payloadVotoJson = JsonSerializer.Serialize(voto);
         string hashVoto = ComputarSha256Hex(payloadVotoJson);
 
@@ -95,7 +112,9 @@ public class ServicioEmisionVoto : IServicioEmisionVoto
             NumeroConfirmacion = numeroConfirmacion,
             HashVoto = hashVoto,
             Timestamp = timestamp,
-            Canal = canal
+            Canal = canal,
+            VotoAsistido = asistencia is not null,
+            RegistroAsistenciaId = asistencia?.Id
         };
 
         // Firma sobre los campos no mutables.
@@ -104,6 +123,22 @@ public class ServicioEmisionVoto : IServicioEmisionVoto
         // Registro en SR-M6 (transparency-service). Política Zero-Identity:
         // solo hashes, IDs criptográficos y metadatos de mesa/elección.
         // Nunca VotanteId, HandshakeId, IP, user-agent ni preferencias.
+        var details = new Dictionary<string, object>
+        {
+            ["custodyId"] = custodiado.Id.ToString(),
+            ["voteHash"] = hashVoto,
+            ["pollingStationId"] = emision.CircunscripcionId,
+            ["cryptographic_protocol"] = "SHA-256",
+            ["votoAsistido"] = asistencia is not null
+        };
+        if (asistencia is not null)
+        {
+            // Solo el ID del registro de asistencia — NUNCA documento del votante
+            // ni del acompañante.
+            details["registroAsistenciaId"] = asistencia.Id.ToString();
+            details["tipoAsistencia"] = asistencia.TipoAsistencia.ToString();
+        }
+
         _auditoria.RegistrarEvento(new EventoAuditoriaSrM6
         {
             Timestamp = timestamp,
@@ -112,13 +147,7 @@ public class ServicioEmisionVoto : IServicioEmisionVoto
                 ? "VOTE_HASH_REGISTERED_PRESENCIAL"
                 : "VOTE_HASH_REGISTERED_REMOTO",
             Severity = "INFO",
-            Details = new Dictionary<string, object>
-            {
-                ["custodyId"] = custodiado.Id.ToString(),
-                ["voteHash"] = hashVoto,
-                ["pollingStationId"] = emision.CircunscripcionId,
-                ["cryptographic_protocol"] = "SHA-256"
-            }
+            Details = details
         });
 
         return comprobante;
