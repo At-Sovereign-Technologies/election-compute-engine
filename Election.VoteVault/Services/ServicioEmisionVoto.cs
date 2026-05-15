@@ -16,6 +16,7 @@ public class ServicioEmisionVoto : IServicioEmisionVoto
     private readonly IGeneradorVvpat _vvpat;
     private readonly IPuertoAuditoriaSrM6 _auditoria;
     private readonly IPuertoEmailCertificado _email;
+    private readonly IValidadorHandshake _handshake;
     private static readonly char[] AlfabetoConfirmacion =
         "ABCDEFGHJKLMNPQRSTUVWXYZ23456789".ToCharArray();
 
@@ -25,7 +26,8 @@ public class ServicioEmisionVoto : IServicioEmisionVoto
         IServicioFirmaDigital firma,
         IGeneradorVvpat vvpat,
         IPuertoAuditoriaSrM6 auditoria,
-        IPuertoEmailCertificado email)
+        IPuertoEmailCertificado email,
+        IValidadorHandshake handshake)
     {
         _metodo = metodo;
         _vault = vault;
@@ -33,6 +35,7 @@ public class ServicioEmisionVoto : IServicioEmisionVoto
         _vvpat = vvpat;
         _auditoria = auditoria;
         _email = email;
+        _handshake = handshake;
     }
 
     public ComprobanteVoto EmitirPresencial(EmisionVoto emision)
@@ -40,6 +43,11 @@ public class ServicioEmisionVoto : IServicioEmisionVoto
         if (string.IsNullOrWhiteSpace(emision.HandshakeId))
         {
             throw new ArgumentException("HandshakeId es obligatorio para emisión presencial.");
+        }
+        if (!_handshake.EsValido(emision.HandshakeId))
+        {
+            throw new InvalidOperationException(
+                "Handshake inválido o no autorizado para emitir voto presencial.");
         }
 
         var comprobante = EmitirComun(emision, CanalVoto.Presencial);

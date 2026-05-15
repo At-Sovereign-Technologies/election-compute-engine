@@ -7,6 +7,8 @@ using Election.VoteVault.Workers;
 using Election.VoteVault.Ceremony.Interfaces;
 using Election.VoteVault.Ceremony.Services;
 using Election.VoteVault.Interfaces;
+using SendGrid;
+using SendGrid.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,7 +39,33 @@ builder.Services.AddSingleton<
 // SE-M3-01 / SE-M3-02: emisión de voto (presencial y remoto).
 builder.Services.AddSingleton<IServicioFirmaDigital, ServicioFirmaDigital>();
 builder.Services.AddSingleton<IGeneradorVvpat, GeneradorVvpatTexto>();
-builder.Services.AddSingleton<IPuertoEmailCertificado, AdaptadorEmailLog>();
+
+// Punto de extensión: validación del handshake del votante presencial.
+// Reemplazar ValidadorHandshakePermisivo por ValidadorHandshakeHttp cuando
+// SE-M2 exponga el servicio real.
+builder.Services.AddSingleton<IValidadorHandshake, ValidadorHandshakePermisivo>();
+
+// SE-M3-02: correo certificado. Selección de proveedor por configuración:
+//   Email:Provider = "SendGrid" | "Smtp" | "Log"
+// Sin configuración explícita usa "Log" (no envía, solo registra; útil para CI).
+string emailProvider = builder.Configuration["Email:Provider"] ?? "Log";
+switch (emailProvider.ToLowerInvariant())
+{
+    case "sendgrid":
+        string sendGridKey = builder.Configuration["Email:SendGrid:ApiKey"]
+            ?? throw new InvalidOperationException(
+                "Email:Provider=SendGrid pero falta Email:SendGrid:ApiKey.");
+        builder.Services.AddSendGrid(opts => opts.ApiKey = sendGridKey);
+        builder.Services.AddSingleton<IPuertoEmailCertificado, AdaptadorEmailSendGrid>();
+        break;
+    case "smtp":
+        builder.Services.AddSingleton<IPuertoEmailCertificado, AdaptadorEmailSmtp>();
+        break;
+    default:
+        builder.Services.AddSingleton<IPuertoEmailCertificado, AdaptadorEmailLog>();
+        break;
+}
+
 builder.Services.AddSingleton<IServicioEmisionVoto, ServicioEmisionVoto>();
 
 // SR-M6 (transparency-service): bus HTTP centralizado para auditoría.
