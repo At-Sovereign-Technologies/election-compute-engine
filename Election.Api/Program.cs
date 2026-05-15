@@ -4,6 +4,7 @@ using Election.Api.Services;
 using Election.Core.Interfaces;
 using Election.Engine.Methods.AlternativeVote;
 using Election.Engine.Methods.MayoriaSimple;
+using Election.Engine.Scrutiny;
 using Election.VoteVault.Services;
 using Election.VoteVault.Workers;
 using Election.VoteVault.Ceremony.Interfaces;
@@ -21,11 +22,51 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Allow cross-origin requests from any origin (permissive for local testing).
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+// SR-M6 (auditoría distribuida): HttpClient del servicio de transparencia.
+// El compañero (PR auditoria-SR-M6) introduce ITransparencyAuditService;
+// nosotros (SE-M3-01..05) consumimos el bus vía IPuertoAuditoriaSrM6
+// con un HttpClient nombrado. Ambas integraciones conviven hasta que el
+// equipo consolide una única abstracción de auditoría.
+var transparencyServiceUrl = builder.Configuration["TransparencyService:BaseUrl"]
+    ?? builder.Configuration["TransparencyService:Url"]
+    ?? "http://localhost:8084";
+var transparencyTimeout = int.Parse(
+    builder.Configuration["TransparencyService:Timeout"] ?? "5000"
+);
+
+builder.Services
+    .AddHttpClient<ITransparencyAuditService, TransparencyAuditService>(client =>
+    {
+        client.BaseAddress = new Uri(transparencyServiceUrl);
+        client.Timeout = TimeSpan.FromMilliseconds(transparencyTimeout);
+    })
+    .ConfigureHttpClient(client =>
+    {
+        client.DefaultRequestHeaders.Add("Accept", "application/json");
+    });
+
+// Handshake + escrutinio (mantenidos del PR de auditoría SR-M6).
+builder.Services.AddSingleton<IHandshakeService, HandshakeService>();
+builder.Services.AddSingleton<IScrutinyAuditor, ScrutinyAuditor>();
+
 builder.Services.AddSingleton<IMetodoElectoral, AlternativeVoteMethod>();
 
-builder.Services.AddSingleton<IVoteVaultService,VoteVaultService>();
+builder.Services.AddSingleton<VoteVaultService>();
+builder.Services.AddSingleton<IVoteVaultService>(sp => sp.GetRequiredService<VoteVaultService>());
 
-builder.Services.AddSingleton<ISealService, SealService>();
+builder.Services.AddSingleton<SealService>();
+builder.Services.AddSingleton<ISealService>(sp => sp.GetRequiredService<SealService>());
 
 builder.Services.AddHostedService<VaultHeartbeatWorker>();
 
@@ -71,18 +112,13 @@ switch (emailProvider.ToLowerInvariant())
 
 builder.Services.AddSingleton<IServicioEmisionVoto, ServicioEmisionVoto>();
 
-// SR-M6 (transparency-service): bus HTTP centralizado para auditoría.
-// URL configurable en appsettings (TransparencyService:Url).
-string transparencyUrl =
-    builder.Configuration["TransparencyService:Url"]
-    ?? throw new InvalidOperationException(
-        "Falta TransparencyService:Url en la configuración.");
-
+// SR-M6 (transparency-service): bus HTTP usado desde SE-M3 vía adaptador propio.
+// URL configurable en appsettings (TransparencyService:Url o TransparencyService:BaseUrl).
 builder.Services
     .AddHttpClient(AdaptadorAuditoriaHttp.HTTP_CLIENT_NAME, client =>
     {
-        client.BaseAddress = new Uri(transparencyUrl);
-        client.Timeout = TimeSpan.FromSeconds(5);
+        client.BaseAddress = new Uri(transparencyServiceUrl);
+        client.Timeout = TimeSpan.FromMilliseconds(transparencyTimeout);
     });
 
 builder.Services.AddSingleton<IPuertoAuditoriaSrM6, AdaptadorAuditoriaHttp>();
@@ -101,7 +137,7 @@ builder.Services.AddSingleton<IServicioAsistencia, ServicioAsistencia>();
 var app = builder.Build();
 
 // SE-M3-05: crear la BD en el arranque si no existe. EnsureCreated es suficiente
-// para SQLite en entorno academico. Si se cambia a Postgres en produccion, aqui
+// para SQLite en entorno académico. Si se cambia a Postgres en producción, aquí
 // se reemplaza por db.Database.MigrateAsync() con migraciones EF formales.
 using (var scope = app.Services.CreateScope())
 {
@@ -118,6 +154,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors();
 app.UseHttpsRedirection();
 
 // Controllers
