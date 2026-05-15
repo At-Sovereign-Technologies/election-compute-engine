@@ -55,3 +55,9 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# SE-M3-05: SQLite local de asistencia (regenera al arrancar)
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
